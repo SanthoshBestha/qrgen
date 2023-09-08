@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>QR CODE GENERATOR</title>
+        <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>QR CODE GENERATOR</h1>
+            </header>
+            <div class="form">
+                <input type="text" id="qrData" placeholder="Enter data">
+                <button id="generateBtn">Generate QR Code</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+            
+            <div class="qr">
+            <div id="qrcode"></div>
+        </div>
+
+        </div>
+    
+        <script>
+            // Get references to the input field, buttons, and QR code div
+            const qrDataInput = document.getElementById("qrData");
+            const generateBtn = document.getElementById("generateBtn");
+            const resetBtn = document.getElementById("resetBtn");
+            const qrCodeDiv = document.getElementById("qrcode");
+    
+            // Initialize a flag to track whether the QR code has been generated
+            let qrCodeGenerated = false;
+            let qrcodeInstance;
+    
+            // Function to generate the QR code
+            function generateQRCode() {
+                // Check if the QR code has already been generated
+                if (qrCodeGenerated) {
+                    alert("QR code has already been generated.");
+                    return;
+                }
+    
+                const qrData = qrDataInput.value;
+    
+                // Check if there is data to generate the QR code
+                if (!qrData) {
+                    alert("Please enter data.");
+                    return;
+                }
+    
+                // Create the QR code
+                qrcodeInstance = new QRCode(qrCodeDiv, {
+                    text: qrData,
+                    width: 128,
+                    height: 128,
+                });
+    
+                // Set the flag to indicate that the QR code has been generated
+                qrCodeGenerated = true;
+    
+                // Disable the input field and buttons after generating the QR code
+                qrDataInput.disabled = true;
+                generateBtn.disabled = true;
+                resetBtn.disabled = false;
+            }
+    
+            // Function to reset the QR code and input field
+            function resetQRCode() {
+                qrCodeGenerated = false;
+                qrDataInput.disabled = false;
+                generateBtn.disabled = false;
+                resetBtn.disabled = true;
+                qrCodeDiv.innerHTML = "";
+                qrDataInput.value = "";
+                if (qrcodeInstance) {
+                    qrcodeInstance.clear();
+                }
+            }
+    
+            // Add click event listeners to the buttons
+            generateBtn.addEventListener("click", generateQRCode);
+            resetBtn.addEventListener("click", resetQRCode);
+        </script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "poppins";
+    }
+    body{
+        display: flex;
+        padding: 0 10px;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        animation: gradient 15s ease infinite;
+    }
+    .wrapper{
+        height: 500px;
+        max-width: 500px;
+        background-image: none;
+        border-radius: 10px;
+        padding: 30px 35px 0;
+        transition: height 0.2s ease;
+        border: 2px solid  black;
+        animation: gradient 10s ease infinite;
+        box-shadow: 2px 2px 4px rgba(0,0,0, 0.4); 
+    }
+    .wrapper header{
+        background: none;
+        margin-bottom: 20px;
+        height: 100px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        border: 2px solid black;
+        color:#556B2F;
+    }
+    .form{
+        display:flex-box;
+    }
+    .form input{
+        border:2px solid black;
+        outline : none;
+        border-radius: 5px;
+        height: 50px;
+        width: 300px;
+        background-color: transparent;
+        cursor:black;
+    }
+    .form button{
+        align-items: center;
+        display: flex;
+        height: 50px;
+        width: 160px;
+        align-self: space-evenly;
+        margin-left: 70px;
+        border: 2px solid black;
+        border-radius: 20px;
+        text-align: center;
+        text-orientation: sideways-right;
+        align-content: center;
+        justify-content: center;
+        background: none;
+        margin-top: 10px;
+        font-size: larger;
+        font-weight: 600;
+        color: #FFFF99;
+    }
+    .qr{
+        border: 2px solid black;
+        height: 150px;
+        align-self: center;
+        display: flex;
+        justify-self: center;
+        margin-top: 10px;
+        align-items: center;
+        justify-items: center;
+        padding-left: 70px;
+        border-radius: 10px;
+    }
+    .qrcode{
+        display: flexbox;
+    }
+
+
+
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+</style>
+</body>
+</html>
